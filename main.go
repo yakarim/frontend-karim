@@ -11,7 +11,6 @@ func main() {
 	port := os.Getenv("PORT")
 	router := gin.Default()
 
-	// Serve frontend static files
 	router.Use(static.Serve("/", static.LocalFile("./public", true)))
 
 	router.NoRoute(func(c *gin.Context) {
