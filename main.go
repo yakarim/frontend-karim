@@ -29,7 +29,7 @@ func main() {
 		c.File("./public/index.html")
 	})
 
-	port = "3001"
+	//port = "3001"
 	// Start and run the server
 	router.Run(":" + port)
 }
