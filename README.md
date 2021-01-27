@@ -1,2 +1,2 @@
 # frontend-karim
-website fronte
+website frontend
