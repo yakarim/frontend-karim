@@ -18,6 +18,5 @@ func main() {
 	})
 
 	//port = "3001"
-	// Start and run the server
 	router.Run(":" + port)
 }
