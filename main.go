@@ -20,7 +20,7 @@ func main() {
 		Key: encryptcookie.GenerateKey(),
 	}))
 	controller.Router(app)
-	log.Fatal(app.Listen(port()))
+	app.Listen(port())
 
 }
 
