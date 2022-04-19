@@ -2,21 +2,35 @@ package main
 
 import (
 	"os"
+	"strings"
 
-	"github.com/gin-gonic/contrib/static"
-	"github.com/gin-gonic/gin"
+	"github.com/gofiber/fiber/v2"
+	"github.com/joho/godotenv"
+	_ "github.com/joho/godotenv/autoload"
+	log "github.com/sirupsen/logrus"
 )
 
 func main() {
+	app := fiber.New()
+
+	app.Static("/", "./public")
+
+	app.Static("*", "./public/index.html")
+
+	log.Fatal(app.Listen(port()))
+
+}
+
+func port() string {
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Println("Error loading .env file")
+	}
 	port := os.Getenv("PORT")
-	router := gin.Default()
-
-	router.Use(static.Serve("/", static.LocalFile("./public", true)))
-
-	router.NoRoute(func(c *gin.Context) {
-		c.File("./public/index.html")
-	})
-
-	//port = "3001"
-	router.Run(":" + port)
+	if len(port) == 0 {
+		port = ":3000"
+	} else if !strings.HasPrefix(":", port) {
+		port = ":" + port
+	}
+	return port
 }
