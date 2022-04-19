@@ -5,18 +5,21 @@ import (
 	"strings"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/encryptcookie"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/joho/godotenv"
 	_ "github.com/joho/godotenv/autoload"
 	log "github.com/sirupsen/logrus"
+	"github.com/yakarim/frontend-karim/controller"
 )
 
 func main() {
 	app := fiber.New()
-
-	app.Static("/", "./public")
-
-	app.Static("*", "./public/index.html")
-
+	app.Use(logger.New())
+	app.Use(encryptcookie.New(encryptcookie.Config{
+		Key: encryptcookie.GenerateKey(),
+	}))
+	controller.Router(app)
 	log.Fatal(app.Listen(port()))
 
 }
